@@ -1,7 +1,6 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { useSearchParams } from 'next/navigation'
 import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -48,9 +47,8 @@ interface StatusHistory {
 }
 
 export default function TrackingPage() {
-  const searchParams = useSearchParams()
   const [searchOrderId, setSearchOrderId] = useState('')
-  const [currentOrderId, setCurrentOrderId] = useState(searchParams.get('orderId') || 'ORD123456789')
+  const [currentOrderId, setCurrentOrderId] = useState('ORD123456789') // default order id
   const [orderData, setOrderData] = useState<OrderData | null>(null)
   const [statusHistory, setStatusHistory] = useState<StatusHistory[]>([])
   const [isLoading, setIsLoading] = useState(false)
@@ -269,7 +267,7 @@ export default function TrackingPage() {
                 </CardContent>
               </Card>
 
-              {/* Tracking Map (Removed Leaflet Map, replaced with placeholder) */}
+              {/* Tracking Map Placeholder */}
               <Card>
                 <CardContent className="p-6">
                   <h2 className="text-lg font-semibold mb-4 flex items-center gap-2">
