@@ -7,10 +7,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Badge } from '@/components/ui/badge'
 import { Separator } from '@/components/ui/separator'
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
-import { Truck, Package, Clock, CheckCircle, Search, ArrowLeft, MapPin, Phone, User, Calendar, FileText } from 'lucide-react'
-import TrackingMap from '@/components/TrackingMap'
-import 'leaflet/dist/leaflet.css'
+import { Truck, Package, Clock, CheckCircle, Search, ArrowLeft, MapPin, Phone, User, FileText } from 'lucide-react'
 
 interface OrderData {
   id: string
@@ -59,46 +56,6 @@ export default function TrackingPage() {
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState('')
 
-  const getTrackingLocations = (status: string, address: string) => {
-    // Default locations for Jakarta area
-    const jakartaLocations = {
-      warehouse: { lat: -6.1395, lng: 106.8135 }, // Jakarta Pusat
-      transit: { lat: -6.2088, lng: 106.8456 }, // Jakarta Selatan
-      destination: { lat: -6.3021, lng: 106.8959 } // Jakarta Barat
-    }
-
-    if (status === 'processing') {
-      return {
-        current: jakartaLocations.warehouse,
-        destination: jakartaLocations.transit,
-        distance: '5.2 km',
-        estimatedTime: '2-3 jam'
-      }
-    } else if (status === 'shipped') {
-      return {
-        current: jakartaLocations.transit,
-        destination: jakartaLocations.destination,
-        distance: '8.7 km',
-        estimatedTime: '1-2 jam'
-      }
-    } else {
-      return {
-        current: jakartaLocations.destination,
-        destination: jakartaLocations.destination,
-        distance: '0 km',
-        estimatedTime: 'Sampai'
-      }
-    }
-  }
-
-  const locations = orderData ? getTrackingLocations(orderData.status, orderData.address.address) : 
-    { 
-      current: { lat: -6.2088, lng: 106.8456 }, 
-      destination: { lat: -6.2297, lng: 106.8295 },
-      distance: '2.5 km',
-      estimatedTime: '30 menit'
-    }
-
   const iconMap: { [key: string]: any } = {
     'clock': Clock,
     'check-circle': CheckCircle,
@@ -113,11 +70,11 @@ export default function TrackingPage() {
   const fetchOrderStatus = async (orderId: string) => {
     setIsLoading(true)
     setError('')
-    
+
     try {
       const response = await fetch(`/api/order/status?orderId=${orderId}`)
       const result = await response.json()
-      
+
       if (result.success) {
         setOrderData(result.data.order)
         setStatusHistory(result.data.statusHistory)
@@ -167,9 +124,9 @@ export default function TrackingPage() {
       <div className="bg-[#242a2e] text-white">
         <div className="max-w-7xl mx-auto p-4">
           <div className="flex items-center gap-4">
-            <Button 
-              variant="ghost" 
-              size="sm" 
+            <Button
+              variant="ghost"
+              size="sm"
               className="text-white hover:bg-white/20 p-2"
               onClick={() => window.history.back()}
             >
@@ -195,7 +152,7 @@ export default function TrackingPage() {
                 onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
                 className="flex-1"
               />
-              <Button 
+              <Button
                 onClick={handleSearch}
                 disabled={isLoading}
                 className="bg-[#242a2e] hover:bg-[#1a1f22]"
@@ -312,56 +269,15 @@ export default function TrackingPage() {
                 </CardContent>
               </Card>
 
-              {/* Tracking Map */}
+              {/* Tracking Map (Removed Leaflet Map, replaced with placeholder) */}
               <Card>
                 <CardContent className="p-6">
                   <h2 className="text-lg font-semibold mb-4 flex items-center gap-2">
                     <MapPin className="w-5 h-5 text-[#242a2e]" />
                     Lokasi Pengiriman
                   </h2>
-                  <div className="space-y-4">
-                    <TrackingMap 
-                      currentPosition={locations.current}
-                      destinationPosition={locations.destination}
-                      status={orderData.status}
-                    />
-                    <div className="grid grid-cols-2 gap-4 text-sm">
-                      <div className="flex items-center gap-2">
-                        <div className="w-3 h-3 bg-[#242a2e] rounded-full"></div>
-                        <span className="text-gray-600">
-                          {orderData.status === 'shipped' ? 'Lokasi Saat Ini' : 
-                           orderData.status === 'delivered' ? 'Lokasi Tujuan' : 'Lokasi Awal'}
-                        </span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <div className="w-3 h-3 bg-green-500 rounded-full"></div>
-                        <span className="text-gray-600">Alamat Tujuan</span>
-                      </div>
-                    </div>
-                    <div className="grid grid-cols-2 gap-4 p-3 bg-gray-50 rounded-lg text-sm">
-                      <div>
-                        <p className="text-gray-600">Jarak</p>
-                        <p className="font-semibold text-[#242a2e]">{locations.distance}</p>
-                      </div>
-                      <div>
-                        <p className="text-gray-600">Estimasi</p>
-                        <p className="font-semibold text-[#242a2e]">{locations.estimatedTime}</p>
-                      </div>
-                    </div>
-                    {orderData.status === 'shipped' && (
-                      <div className="p-3 bg-blue-50 border border-blue-200 rounded-lg">
-                        <p className="text-sm text-blue-800">
-                          <strong>Status:</strong> Paket sedang dalam perjalanan ke alamat tujuan
-                        </p>
-                      </div>
-                    )}
-                    {orderData.status === 'delivered' && (
-                      <div className="p-3 bg-green-50 border border-green-200 rounded-lg">
-                        <p className="text-sm text-green-800">
-                          <strong>Status:</strong> Paket telah sampai di alamat tujuan
-                        </p>
-                      </div>
-                    )}
+                  <div className="p-6 bg-gray-100 rounded-lg text-center text-gray-500">
+                    Peta pengiriman sementara tidak tersedia.
                   </div>
                 </CardContent>
               </Card>
@@ -445,15 +361,15 @@ export default function TrackingPage() {
               <Card>
                 <CardContent className="p-6">
                   <div className="space-y-3">
-                    <Button 
+                    <Button
                       className="w-full bg-[#242a2e] hover:bg-[#1a1f22]"
                       onClick={() => window.print()}
                     >
                       <FileText className="w-4 h-4 mr-2" />
                       Cetak Detail Pesanan
                     </Button>
-                    <Button 
-                      variant="outline" 
+                    <Button
+                      variant="outline"
                       className="w-full border-[#242a2e] text-[#242a2e] hover:bg-[#242a2e] hover:text-white"
                       onClick={() => window.history.back()}
                     >
