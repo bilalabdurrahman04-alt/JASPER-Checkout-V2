@@ -369,10 +369,10 @@ export default function TrackingPage() {
                     <Button
                       variant="outline"
                       className="w-full border-[#242a2e] text-[#242a2e] hover:bg-[#242a2e] hover:text-white"
-                      onClick={() => window.history.back()}
+                      onClick={() => (window.location.href = "https://jasper-website-delta.vercel.app/")}
                     >
                       <ArrowLeft className="w-4 h-4 mr-2" />
-                      Kembali ke Checkout
+                      Kembali ke Beranda
                     </Button>
                   </div>
                 </CardContent>
