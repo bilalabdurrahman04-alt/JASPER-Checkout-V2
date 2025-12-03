@@ -17,7 +17,7 @@ export async function GET(request: NextRequest) {
       {
         id: 1,
         status: 'Menunggu Pembayaran',
-        time: '2024-01-15 10:30',
+        time: '2025-01-15 10:30',
         description: 'Menunggu konfirmasi pembayaran dari pembeli',
         completed: true,
         icon: 'clock'
@@ -25,32 +25,41 @@ export async function GET(request: NextRequest) {
       {
         id: 2,
         status: 'Pembayaran Berhasil',
-        time: '2024-01-15 11:45',
+        time: '2025-01-15 11:45',
         description: 'Pembayaran telah dikonfirmasi',
         completed: true,
         icon: 'check-circle'
       },
       {
         id: 3,
-        status: 'Sedang Diproses',
-        time: '2024-01-15 14:20',
-        description: 'Pesanan sedang disiapkan oleh penjual',
-        completed: true,
-        icon: 'package'
-      },
-      {
-        id: 4,
-        status: 'Dikirim',
-        time: '2024-01-16 09:15',
-        description: `Pesanan telah dikirim dengan resi JNE1234567890`,
+        status: 'Dijemput',
+        time: '2025-01-16 09:15',
+        description: `Pesanan sedang dijemput dengan resi JNE1234567890`,
         completed: true,
         icon: 'truck',
         trackingNumber: 'JNE1234567890'
       },
       {
+        id: 4,
+        status: 'Sedang Diproses',
+        time: '2025-01-16 14:20',
+        description: 'Barang sedang diperbaiki oleh teknisi',
+        completed: true,
+        icon: 'package'
+      },
+      {
         id: 5,
+        status: 'Dikirim',
+        time: '2025-01-18 09:15',
+        description: `Pesanan telah dikirim dengan resi JNE1234567776`,
+        completed: true,
+        icon: 'truck',
+        trackingNumber: 'JNE1234567776'
+      },
+      {
+        id: 6,
         status: 'Sampai Tujuan',
-        time: 'Estimasi: 2024-01-17',
+        time: 'Estimasi: 2025-01-19',
         description: 'Pesanan sedang dalam perjalanan ke alamat tujuan',
         completed: false,
         icon: 'check-circle'
@@ -61,8 +70,8 @@ export async function GET(request: NextRequest) {
     const order = {
       id: orderId,
       status: 'shipped',
-      createdAt: '2024-01-15T10:30:00Z',
-      updatedAt: '2024-01-16T09:15:00Z',
+      createdAt: '2025-01-15T10:30:00Z',
+      updatedAt: '2025-01-16T09:15:00Z',
       subtotal: 50000,
       shippingCost: 15000,
       total: 65000,
